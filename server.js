@@ -1,9 +1,11 @@
 // Middleware?
 import express from "express";
 import getRouter from "./routes/getRouter.js";
-import "./dbConfig/config.js";
+// import "./dbConfig/config.js";
 import dotenv from "dotenv";
 dotenv.config();
+import { sequelize } from "./dbConfig/sequlizeConfig.js";
+import "./model/product.js";
 
 const app = express();
 const port = process.env.PORT || 4500;
@@ -29,6 +31,11 @@ app.post("/:id", (req, res) => {
 });
 // req --> this is the request from our client
 // res --> this is the response from our server
+
+sequelize
+  .sync()
+  .then((result) => {})
+  .catch((err) => console.log(err));
 
 // starting the server
 app.listen(port, () => {
